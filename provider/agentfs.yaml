@@ -6,10 +6,29 @@ identity:
     zh_Hans: "Agentfs"
     ja_JP: "Agentfs"
   description:
-    en_US: "Agentfs"
-    zh_Hans: "Agentfs"
-    ja_JP: "Agentfs"
+    en_US: "Agent File System — mount Dify datasets as a virtual filesystem"
+    zh_Hans: "Agent File System"
+    ja_JP: "Agent File System"
   icon: icon.svg
+credentials_for_provider:
+  knowledge_base_url:
+    type: text-input
+    required: true
+    label:
+      en_US: Knowledge API Base URL
+    placeholder:
+      en_US: "https://your-dify-host/v1"
+    help:
+      en_US: "Root of the Dify Knowledge (dataset) API, usually SERVICE_API_URL + /v1."
+  knowledge_api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: Knowledge API Key
+    placeholder:
+      en_US: "dataset-..."
+    help:
+      en_US: "A Dify dataset API key with access to the selected datasets."
 strategies:
   - strategies/agentfs.yaml
 extra:

@@ -2,13 +2,15 @@ identity:
   name: agentfs
   author: ki3nd
   label:
-    en_US: "Agentfs"
-    zh_Hans: "Agentfs"
-    ja_JP: "Agentfs"
+    en_US: "AgentFS"
+    zh_Hans: "AgentFS"
+    ja_JP: "AgentFS"
 description:
-  en_US: "Agentfs"
-  zh_Hans: "Agentfs"
-  ja_JP: "Agentfs"
+  en_US: "Explore Dify datasets as a read-only virtual filesystem (ls/grep/search/cat) plus passthrough tools."
+  zh_Hans: "以只读虚拟文件系统方式浏览 Dify 数据集。"
+  ja_JP: "Dify データセットを仮想ファイルシステムとして探索。"
+features:
+  - history-messages
 parameters:
   - name: model
     type: model-selector
@@ -17,16 +19,73 @@ parameters:
     label:
       en_US: Model
       zh_Hans: 模型
-      pt_BR: Model
       ja_JP: モデル
-  - name: tools
-    type: array[tools]
+  - name: query
+    type: string
     required: true
     label:
-      en_US: Tools list
+      en_US: Query
+      zh_Hans: 查询
+      ja_JP: クエリ
+  - name: instruction
+    type: string
+    required: false
+    label:
+      en_US: Instruction
+      zh_Hans: 指令
+      ja_JP: 指示
+    auto_generate:
+      type: prompt_instruction
+    template:
+      enabled: true
+  - name: tools
+    type: array[tools]
+    required: false
+    label:
+      en_US: Tools
       zh_Hans: 工具列表
-      pt_BR: Tools list
-      ja_JP: ツールリスト
+      ja_JP: ツール
+  - name: datasets
+    type: string
+    required: true
+    label:
+      en_US: Dataset mounts
+      zh_Hans: 数据集挂载
+      ja_JP: データセットマウント
+    placeholder:
+      en_US: "One 'mount: dataset_id' per line, e.g.  hr: abc123"
+    help:
+      en_US: "Each line maps a folder name to a dataset id, e.g. `hr: abc123`. The folder becomes the mount root the agent sees (like /hr)."
+  - name: maximum_iterations
+    type: number
+    required: true
+    default: 10
+    min: 1
+    max: 500
+    label:
+      en_US: Maximum Iterations
+      zh_Hans: 最大迭代次数
+      ja_JP: 最大反復回数
+  - name: expose_semantic_search
+    type: boolean
+    required: false
+    default: true
+    label:
+      en_US: Expose semantic search
+  - name: include_workspace_tree
+    type: boolean
+    required: false
+    default: true
+    label:
+      en_US: Include workspace tree in prompt
+  - name: truncate_kb
+    type: number
+    required: false
+    default: 50
+    min: 1
+    max: 1024
+    label:
+      en_US: Output truncation (KB)
 extra:
   python:
     source: strategies/agentfs.py
