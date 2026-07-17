@@ -31,3 +31,31 @@ def test_instructions_contains_mount_and_tree():
     out = _make_bare_fs().instructions()
     assert "/docs: HR docs" in out
     assert "docs/" in out
+
+
+class _StubWorkspace:
+    def __init__(self):
+        self.closed = False
+
+    async def close(self):
+        self.closed = True
+
+
+def test_close_awaits_workspace_close_and_clears_state():
+    fs = _make_bare_fs()
+    stub_workspace = _StubWorkspace()
+    fs._workspace = stub_workspace
+
+    fs.close()
+
+    assert stub_workspace.closed is True
+    assert fs._workspace is None
+
+
+def test_close_does_not_raise_when_workspace_is_none():
+    fs = _make_bare_fs()
+    fs._workspace = None
+
+    fs.close()  # should not raise
+
+    assert fs._workspace is None

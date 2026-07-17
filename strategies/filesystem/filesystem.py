@@ -136,6 +136,11 @@ class AgentFilesystem:
         )
 
     def close(self) -> None:
+        if self._workspace is not None:
+            try:
+                run_coroutine_sync(lambda: self._workspace.close())
+            except Exception:  # noqa: BLE001
+                logger.warning("workspace close failed", exc_info=True)
         self._workspace = None
         self._executor = None
         self._mount_descriptions.clear()
