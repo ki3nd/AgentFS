@@ -1,0 +1,17 @@
+identity:
+  author: ki3nd
+  name: agentfs
+  label:
+    en_US: "Agentfs"
+    zh_Hans: "Agentfs"
+    ja_JP: "Agentfs"
+  description:
+    en_US: "Agentfs"
+    zh_Hans: "Agentfs"
+    ja_JP: "Agentfs"
+  icon: icon.svg
+strategies:
+  - strategies/agentfs.yaml
+extra:
+  python:
+    source: provider/agentfs.py
