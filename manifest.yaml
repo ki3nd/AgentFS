@@ -3,17 +3,16 @@ type: plugin
 author: ki3nd
 name: agentfs
 label:
-  en_US: agentfs
-  ja_JP: agentfs
-  zh_Hans: agentfs
-  pt_BR: agentfs
+  en_US: AgentFS
+  ja_JP: AgentFS
+  zh_Hans: AgentFS
+  pt_BR: AgentFS
 description:
-  en_US: Agent File System
-  ja_JP: Agent File System
-  zh_Hans: Agent File System
-  pt_BR: Agent File System
+  en_US: Mount Dify datasets as a read-only virtual filesystem so the agent explores your knowledge with shell commands (ls, grep, search, cat) instead of one-shot retrieval.
+  ja_JP: Dify のデータセットを読み取り専用の仮想ファイルシステムとしてマウントし、一回限りの検索ではなくシェルコマンド（ls、grep、search、cat）でナレッジを探索できるエージェント戦略。
+  zh_Hans: 将 Dify 数据集挂载为只读虚拟文件系统，让智能体用 shell 命令（ls、grep、search、cat）探索知识库，而不是一次性检索。
+  pt_BR: Monta datasets do Dify como um sistema de arquivos virtual somente leitura, para o agente explorar seu conhecimento com comandos de shell (ls, grep, search, cat) em vez de uma recuperação única.
 icon: icon.svg
-icon_dark: icon-dark.svg
 resource:
   memory: 268435456
   permission:

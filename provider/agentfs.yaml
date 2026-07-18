@@ -2,9 +2,9 @@ identity:
   author: ki3nd
   name: agentfs
   label:
-    en_US: "Agentfs"
-    zh_Hans: "Agentfs"
-    ja_JP: "Agentfs"
+    en_US: "AgentFS"
+    zh_Hans: "AgentFS"
+    ja_JP: "AgentFS"
   description:
     en_US: "Agent File System — mount Dify datasets as a virtual filesystem"
     zh_Hans: "Agent File System"
