@@ -150,6 +150,14 @@ class AgentfsAgentStrategy(AgentStrategy):
             yield self.create_text_message(f"Invalid dataset mounts: {exc}")
             return
 
+        if mounts and (not base_url or not api_key):
+            yield self.create_text_message(
+                "Dataset mounts are configured but 'knowledge_base_url' and "
+                "'knowledge_api_key' are required to mount them. Please set both "
+                "strategy parameters before running."
+            )
+            return
+
         if mounts:
             try:
                 fs_config = FilesystemConfig(
@@ -462,7 +470,7 @@ class AgentfsAgentStrategy(AgentStrategy):
                         )
                 else:
                     for tool_call_id, tool_call_name, tool_call_args in tool_calls:
-                        tool_instance = tool_instances[tool_call_name]
+                        tool_instance = tool_instances.get(tool_call_name)
                         tool_call_started_at = time.perf_counter()
 
                         # --- agentfs: intercept the synthetic filesystem tool ---
@@ -495,7 +503,9 @@ class AgentfsAgentStrategy(AgentStrategy):
                             data={},
                             metadata={
                                 LogMetadata.STARTED_AT: time.perf_counter(),
-                                LogMetadata.PROVIDER: tool_instance.identity.provider,
+                                LogMetadata.PROVIDER: tool_instance.identity.provider
+                                if tool_instance
+                                else "",
                             },
                             parent=round_log,
                             status=ToolInvokeMessage.LogMessage.LogStatus.START,
@@ -627,7 +637,9 @@ class AgentfsAgentStrategy(AgentStrategy):
                             },
                             metadata={
                                 LogMetadata.STARTED_AT: tool_call_started_at,
-                                LogMetadata.PROVIDER: tool_instance.identity.provider,
+                                LogMetadata.PROVIDER: tool_instance.identity.provider
+                                if tool_instance
+                                else "",
                                 LogMetadata.FINISHED_AT: time.perf_counter(),
                                 LogMetadata.ELAPSED_TIME: time.perf_counter()
                                 - tool_call_started_at,
@@ -651,9 +663,11 @@ class AgentfsAgentStrategy(AgentStrategy):
                 for prompt_tool in prompt_messages_tools:
                     if prompt_tool.name == EXECUTE_COMMAND_TOOL_NAME:
                         continue
-                    self.update_prompt_message_tool(
-                        tool_instances[prompt_tool.name], prompt_tool
-                    )
+                    tool_instance_for_update = tool_instances.get(prompt_tool.name)
+                    if tool_instance_for_update is not None:
+                        self.update_prompt_message_tool(
+                            tool_instance_for_update, prompt_tool
+                        )
                 yield self.finish_log_message(
                     log=round_log,
                     data={

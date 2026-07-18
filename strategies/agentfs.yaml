@@ -56,6 +56,28 @@ parameters:
       en_US: "One 'mount: dataset_id' per line, e.g.  hr: abc123"
     help:
       en_US: "Each line maps a folder name to a dataset id, e.g. `hr: abc123`. The folder becomes the mount root the agent sees (like /hr)."
+  - name: knowledge_base_url
+    type: string
+    required: true
+    label:
+      en_US: Knowledge API Base URL
+      zh_Hans: 知识库 API 地址
+      ja_JP: ナレッジ API ベース URL
+    placeholder:
+      en_US: "https://your-dify-host/v1"
+    help:
+      en_US: "Root of the Dify Knowledge (dataset) API, usually SERVICE_API_URL + /v1."
+  - name: knowledge_api_key
+    type: secret-input
+    required: true
+    label:
+      en_US: Knowledge API Key
+      zh_Hans: 知识库 API 密钥
+      ja_JP: ナレッジ API キー
+    placeholder:
+      en_US: "dataset-..."
+    help:
+      en_US: "A Dify dataset API key with access to the selected datasets."
   - name: maximum_iterations
     type: number
     required: true
